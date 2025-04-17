@@ -1,8 +1,7 @@
 import java.util.Scanner;
 
 public class App {
-    public static boolean runStepOneCalculator(Scanner scanner) {
-        boolean value;
+    public static void runStepOneCalculator(Scanner scanner) {
         String answer;
 
         System.out.println();
@@ -18,13 +17,12 @@ public class App {
             answer = scanner.nextLine();
         } while (!answer.equals("exit"));
 
-        showCalMenu();
-        value = calc.exitBtn();
-        return value;
+        do {
+            calc.showCalMenu();
+        } while (calc.exitBtn());
     }
 
-    public static boolean runStepTwoCalculator(Scanner scanner) {
-        boolean value;
+    public static void runStepTwoCalculator(Scanner scanner) {
         String answer;
 
         System.out.println();
@@ -40,13 +38,12 @@ public class App {
             answer = scanner.nextLine();
         } while (!answer.equals("exit"));
 
-        showCalMenu();
-        value = calc.exitBtn();
-        return value;
+        do {
+            calc.showCalMenu();
+        } while (calc.exitBtn());
     }
 
-    public static boolean runStepThreeCalculator(Scanner scanner) {
-        boolean value;
+    public static void runStepThreeCalculator(Scanner scanner) {
         String answer;
 
         System.out.println();
@@ -62,16 +59,9 @@ public class App {
             answer = scanner.nextLine();
         } while (!answer.equals("exit"));
 
-        showCalMenu();
-        value = calc.exitBtn();
-        return value;
-    }
-
-    public static void showCalMenu() {
-        System.out.println("==========MENU==========");
-        System.out.println("|  프로그램 종료  [0] 입력  |");
-        System.out.println("|  홈으로 이동  다른키 입력  |");
-        System.out.println("========================");
+        do {
+            calc.showCalMenu();
+        } while (calc.exitBtn());
     }
 
 }
