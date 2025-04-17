@@ -26,17 +26,15 @@ public class Calculator implements MenuBtn, ExceptionThrower {
         System.out.println("결과: " + result);
     }
     @Override
+    public void showCalMenu() {
+        System.out.println("==========MENU==========");
+        System.out.println("|  홈으로 이동  다른키 입력  |");
+        System.out.println("========================");
+    }
+    @Override
     public boolean exitBtn() {
-        try {
-            if (Integer.parseInt(scanner.nextLine()) == 0) {
-                return false;
-            } else {
-                return true;
-            }
-        }
-        catch (NumberFormatException e) {
-            return true;
-        }
+        scanner.nextLine();
+        return false;
     }
 
     @Override

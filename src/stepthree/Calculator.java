@@ -18,6 +18,13 @@ public class Calculator implements MenuBtn, ExceptionThrower {
 
     }
     @Override
+    public void showCalMenu() {
+        System.out.println("==========MENU==========");
+        System.out.println("|  프로그램 종료  [0] 입력  |");
+        System.out.println("|  홈으로 이동  다른키 입력  |");
+        System.out.println("========================");
+    }
+    @Override
     public boolean exitBtn() {
         try {
             if (Integer.parseInt(scanner.nextLine()) == 0) {

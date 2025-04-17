@@ -31,16 +31,29 @@ public class Calculator implements MenuBtn, ExceptionThrower {
         System.out.println("결과: " + result);
     }
     @Override
+    public void showCalMenu() {
+        System.out.println("============MENU============");
+        System.out.println("|  마지막 결과 지우기  [1] 입력  |");
+        System.out.println("|  결과 모두 보기     [2] 입력  |");
+        System.out.println("|  홈으로 이동      다른키 입력  |");
+        System.out.println("============================");
+    }
+    @Override
     public boolean exitBtn() {
         try {
-            if (Integer.parseInt(scanner.nextLine()) == 0) {
-                return false;
-            } else {
-                return true;
+            switch (Integer.parseInt(scanner.nextLine())) {
+                case 1:
+                    removeResult();
+                    return true;
+                case 2:
+                    printResult();
+                    return true;
+                default:
+                    return false;
             }
         }
         catch (NumberFormatException e) {
-            return true;
+            return false;
         }
     }
     @Override
@@ -85,6 +98,12 @@ public class Calculator implements MenuBtn, ExceptionThrower {
 
     public void removeResult() {
         results.remove(results.size() - 1);     // .remove(int index) 값이 없을 때 예외처리 추가 필요
+    }
+
+    public void printResult() {
+        for (int i = 0; i < results.size(); i++) {
+            System.out.println("[" + i + "]번째 결과 : " + results.get(i));
+        }
     }
 
     int getNum1() { return num1; }
