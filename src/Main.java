@@ -14,7 +14,7 @@ public class Main {
         System.out.println("프로그램 종료시 [0] 입력");
 
         while (getFlag()) {
-            int choiceCal = scanner.nextInt();
+            int choiceCal = Integer.parseInt(scanner.nextLine());
             choiceCalculator(choiceCal, scanner);
         }
         scanner.close();
