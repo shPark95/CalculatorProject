@@ -24,21 +24,19 @@ public class Calculator implements MenuBtn, ExceptionThrower {
 
         String result = calculate(num1, num2, operator.charAt(0));
         System.out.println("결과: " + result);
-
-        System.out.println("더 계산하시겠습니까? (exit 입력 시 종료)");
-        String answer = scanner.nextLine();
-
-        if (answer.equals("exit")) {
-            exitBtn();
+    }
+    @Override
+    public boolean exitBtn() {
+        try {
+            if (Integer.parseInt(scanner.nextLine()) == 0) {
+                return false;
+            } else {
+                return true;
+            }
         }
-    }
-    @Override
-    public void exitBtn() {
-
-    }
-    @Override
-    public void changeCalculator() {
-
+        catch (NumberFormatException e) {
+            return true;
+        }
     }
 
     @Override

@@ -18,12 +18,17 @@ public class Calculator implements MenuBtn, ExceptionThrower {
 
     }
     @Override
-    public void exitBtn() {
-
-    }
-    @Override
-    public void changeCalculator() {
-
+    public boolean exitBtn() {
+        try {
+            if (Integer.parseInt(scanner.nextLine()) == 0) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+        catch (NumberFormatException e) {
+            return true;
+        }
     }
     @Override
     public void checknum2(int num) throws UserException.DivZeroException {
