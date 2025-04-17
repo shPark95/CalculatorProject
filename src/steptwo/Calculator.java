@@ -4,10 +4,12 @@ import exception.UserException;
 import interfaces.ExceptionThrower;
 import interfaces.MenuBtn;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Calculator implements MenuBtn, ExceptionThrower {
     private Scanner scanner;
+    private ArrayList<Integer> results = new ArrayList<>();
     private int num1, num2;
     private char operator;
 
@@ -54,16 +56,20 @@ public class Calculator implements MenuBtn, ExceptionThrower {
             switch (getOperator()) {
                 case '+':
                     result = getNum1() + getNum2();
+                    results.add(result);
                     return Integer.toString(result);
                 case '-':
                     result = getNum1() - getNum2();
+                    results.add(result);
                     return Integer.toString(result);
                 case '*':
                     result = getNum1() * getNum2();
+                    results.add(result);
                     return Integer.toString(result);
                 case '/':
                     checknum2(getNum2());
                     result = getNum1() / getNum2();
+                    results.add(result);
                     return Integer.toString(result);
                 default:
                     return "잘못된 연산자입니다.";
@@ -75,6 +81,10 @@ public class Calculator implements MenuBtn, ExceptionThrower {
         catch (Exception e) {
             return "계산실패";
         }
+    }
+
+    public void removeResult() {
+        results.remove(results.size() - 1);     // .remove(int index) 값이 없을 때 예외처리 추가 필요
     }
 
     int getNum1() { return num1; }
