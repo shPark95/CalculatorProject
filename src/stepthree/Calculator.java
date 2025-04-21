@@ -5,11 +5,14 @@ import interfaces.ExceptionThrower;
 import interfaces.MenuBtn;
 import stepthree.enums.OperatorType;
 
+import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.List;
 
 public class Calculator<T extends Number> implements MenuBtn, ExceptionThrower {
     private final Class<T> type;
     private Scanner scanner;
+    private final List<Double> calResultList = new ArrayList<>();
     private T num1;
     private T num2;
 
@@ -20,6 +23,35 @@ public class Calculator<T extends Number> implements MenuBtn, ExceptionThrower {
 
     public double calculate(T a, T b, OperatorType op) {
         return op.calculate(a, b);
+    }
+
+    public void getOneResult() {
+        CalHistory history = new CalHistory(calResultList);
+        List<Double> resultList = history.getDistinctSortedResults();
+
+        if (resultList.isEmpty()) {
+            System.out.println("조건을 만족하는 결과가 없습니다.");
+        } else {
+            System.out.println("중복없는 정렬된 모든 결과 표시:");
+            for (int i = 0; i < resultList.size(); i++) {
+                System.out.println("[" + (i + 1) + "] : " + resultList.get(i));
+            }
+        }
+    }
+
+    public void getTwoResult() {
+        System.out.print("기준이 되는 숫자를 입력하세요: ");
+        int inputValue = Integer.parseInt(scanner.nextLine());
+
+        CalHistory history = new CalHistory(calResultList);
+        List<Double> resultList = history.getGreaterThan(inputValue);
+
+        if (resultList.isEmpty()) {
+            System.out.println("조건을 만족하는 결과가 없습니다.");
+        } else {
+            System.out.println("입력한 값보다 큰 결과 목록:");
+            resultList.forEach(System.out::println);
+        }
     }
 
     @Override
@@ -33,13 +65,15 @@ public class Calculator<T extends Number> implements MenuBtn, ExceptionThrower {
 
         OperatorType op = OperatorType.expression(operator);
         double result = calculate(num1, num2, op);
+        calResultList.add(result);
 
         System.out.println("결과: " + result);
     }
     @Override
     public void showCalMenu() {
         System.out.println("===============MENU===============");
-        System.out.println("|  입력한 값보다 큰 결과 보기  [1] 입력  |");
+        System.out.println("|  모든 값 중복 없이 정렬보기  [1] 입력  |");
+        System.out.println("|  입력한 값보다 큰 결과 보기  [2] 입력  |");
         System.out.println("|  홈으로 이동            다른키 입력  |");
         System.out.println("==================================");
     }
@@ -52,14 +86,19 @@ public class Calculator<T extends Number> implements MenuBtn, ExceptionThrower {
     @Override
     public boolean exitBtn() {
         try {
-            if (Integer.parseInt(scanner.nextLine()) == 0) {
-                return false;
-            } else {
-                return true;
+            switch (Integer.parseInt(scanner.nextLine())) {
+                case 1:
+                    getOneResult();
+                    return true;
+                case 2:
+                    getTwoResult();
+                    return true;
+                default:
+                    return false;
             }
         }
         catch (NumberFormatException e) {
-            return true;
+            return false;
         }
     }
 
