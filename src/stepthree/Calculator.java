@@ -84,6 +84,20 @@ public class Calculator<T extends Number> implements MenuBtn, ExceptionThrower {
         }
     }
     @Override
+    public void checkInteger(String num) throws UserException.TypeException {
+        int index = num.indexOf(".");
+        if (index != -1) {
+            throw new UserException.TypeException();
+        }
+    }
+    public String parseInteger(String num) {
+        int index = num.indexOf(".");
+        if (index != -1) {
+            num = num.substring(0, index);
+        }
+        return num;
+    }
+    @Override
     public boolean exitBtn() {
         try {
             switch (Integer.parseInt(scanner.nextLine())) {
@@ -105,7 +119,14 @@ public class Calculator<T extends Number> implements MenuBtn, ExceptionThrower {
     private T parseNumber(String input) {
         try {
             if (type == Integer.class) {
+                try {
+                    checkInteger(input);
+                } catch (UserException.TypeException e) {
+                    System.out.println(e.getMessage());
+                    input = parseInteger(input);
+                }
                 return type.cast(Integer.parseInt(input));
+
             } else if (type == Double.class) {
                 return type.cast(Double.parseDouble(input));
             }
