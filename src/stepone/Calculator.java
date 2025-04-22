@@ -15,10 +15,29 @@ public class Calculator implements MenuBtn, ExceptionThrower {
 
     @Override
     public void run() {
+        int num1;
+        int num2;
+
         System.out.println("첫 번째 숫자를 입력하세요: ");
-        int num1 = Integer.parseInt(scanner.nextLine());        // scanner.nextInt()를 사용하는 경우 개행문자를 남겨
-        System.out.println("두 번째 숫자를 입력하세요: ");            // 다음 scanner.nextLine()에 문제를 일으킴
-        int num2 = Integer.parseInt(scanner.nextLine());
+        String input1 = scanner.nextLine();
+        try {
+            checkInteger(input1);
+        } catch (UserException.TypeException e) {
+            System.out.println(e.getMessage());
+            input1 = parseInteger(input1);
+        } finally {
+            num1 = Integer.parseInt(input1);                // scanner.nextInt()를 사용하는 경우 개행문자를 남겨
+        }                                                   // 다음 scanner.nextLine()에 문제를 일으킴
+        System.out.println("두 번째 숫자를 입력하세요: ");
+        String input2 = scanner.nextLine();
+        try {
+            checkInteger(input2);
+        } catch (UserException.TypeException e) {
+            System.out.println(e.getMessage());
+            input2 = parseInteger(input2);
+        } finally {
+            num2 = Integer.parseInt(input2);
+        }
         System.out.println("사칙연산 기호를 입력하세요: ");
         String operator = scanner.nextLine();
 
@@ -36,12 +55,25 @@ public class Calculator implements MenuBtn, ExceptionThrower {
         scanner.nextLine();
         return false;
     }
-
     @Override
     public void checknum2(int num) throws UserException.DivZeroException {
         if (num == 0) {
             throw new UserException.DivZeroException();
         }
+    }
+    @Override
+    public void checkInteger(String num) throws UserException.TypeException {
+        int index = num.indexOf(".");
+        if (index != -1) {
+            throw new UserException.TypeException();
+        }
+    }
+    public String parseInteger(String num) {
+        int index = num.indexOf(".");
+        if (index != -1) {
+            num = num.substring(0, index);
+        }
+        return num;
     }
 
     public String calculate(int num1, int num2, char operator) {

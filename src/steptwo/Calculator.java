@@ -20,9 +20,25 @@ public class Calculator implements MenuBtn, ExceptionThrower {
     @Override
     public void run() {
         System.out.println("첫 번째 숫자를 입력하세요: ");
-        setNum1(Integer.parseInt(scanner.nextLine()));
+        String input1 = scanner.nextLine();
+        try {
+            checkInteger(input1);
+        } catch (UserException.TypeException e) {
+            System.out.println(e.getMessage());
+            input1 = parseInteger(input1);
+        } finally {
+            setNum1(Integer.parseInt(input1));
+        }
         System.out.println("두 번째 숫자를 입력하세요: ");
-        setNum2(Integer.parseInt(scanner.nextLine()));
+        String input2 = scanner.nextLine();
+        try {
+            checkInteger(input1);
+        } catch (UserException.TypeException e) {
+            System.out.println(e.getMessage());
+            input1 = parseInteger(input1);
+        } finally {
+            setNum1(Integer.parseInt(input2));
+        }
         System.out.println("사칙연산 기호를 입력하세요: ");
         String operator = scanner.nextLine();
         setOperator(operator);
@@ -61,6 +77,20 @@ public class Calculator implements MenuBtn, ExceptionThrower {
         if (num == 0) {
             throw new UserException.DivZeroException();
         }
+    }
+    @Override
+    public void checkInteger(String num) throws UserException.TypeException {
+        int index = num.indexOf(".");
+        if (index != -1) {
+            throw new UserException.TypeException();
+        }
+    }
+    public String parseInteger(String num) {
+        int index = num.indexOf(".");
+        if (index != -1) {
+            num = num.substring(0, index);
+        }
+        return num;
     }
 
     public String calculate() {

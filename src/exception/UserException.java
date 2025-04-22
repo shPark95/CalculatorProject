@@ -7,4 +7,9 @@ public class UserException {
         }
     }
 
+    public static class TypeException extends Exception {
+        public TypeException() {
+            super("정수 연산에서 소수점 이하의 값은 제외됩니다.");
+        }
+    }
 }
